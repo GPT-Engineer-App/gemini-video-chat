@@ -52,7 +52,7 @@ const Index = () => {
     formData.append("file", videoBlob, "recorded_video.mp4");
 
     try {
-      const response = await fetch("YOUR_UPLOAD_ENDPOINT", {
+      const response = await fetch("https://example.com/upload", {
         method: "POST",
         body: formData,
       });
@@ -61,7 +61,9 @@ const Index = () => {
         throw new Error("Upload failed");
       }
 
-      const data = await response.json();
+      const data = await response.json().catch(() => {
+        throw new Error("Invalid JSON response");
+      });
       console.log("Upload successful:", data);
       toast({
         title: "Upload successful",
